@@ -7,6 +7,7 @@ import com.example.mockfirstweek.JWT.response.JwtResponse;
 import com.example.mockfirstweek.JWT.response.MessageResponse;
 import com.example.mockfirstweek.model.Account;
 import com.example.mockfirstweek.model.ERole;
+import com.example.mockfirstweek.model.Product;
 import com.example.mockfirstweek.model.Role;
 import com.example.mockfirstweek.reponsitory.AccountRepository;
 import com.example.mockfirstweek.reponsitory.RoleRepository;
@@ -14,7 +15,9 @@ import com.example.mockfirstweek.service.AccountDetailService;
 import com.example.mockfirstweek.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -74,6 +77,11 @@ public class HomeController {
                         account.getUsername(),
                         account.getPassword(),
                         roles));
+    }
+    @PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping("/gettk")
+    public ResponseEntity<Iterable<Account>> getAll(){
+        return new ResponseEntity<>(accountRepository.findAll(), HttpStatus.OK);
     }
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
