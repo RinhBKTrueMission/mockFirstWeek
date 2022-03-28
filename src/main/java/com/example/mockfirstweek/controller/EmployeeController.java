@@ -49,25 +49,25 @@ public class EmployeeController {
         }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     //@PreAuthorize("hasRole('ADMIN') or hasRole('MODERATOR')")
-    @DeleteMapping(value = "delete/{id}")
-    public ResponseEntity<Product> deleteInfo(@PathVariable String id){
-        Optional<Product> userOptional=repo.findById(id);
-        return userOptional.map(product ->
-        {
-            repo.deleteById(product.getCode());
-            return new ResponseEntity<>(product,HttpStatus.OK);
-
-        }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-    @DeleteMapping(value = "deleteInfo/{id}")
-    public ResponseEntity<Product> deleteInfoId(@PathVariable String id){
-        Optional<Product> userOptional=repo.findById(id);
-        return userOptional.map(product ->
-        {
-            repo.deleteById(product.getCode());
-            return new ResponseEntity<>(product,HttpStatus.OK);
-
-        }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+//    @DeleteMapping(value = "delete/{id}")
+//    public ResponseEntity<Product> deleteInfo(@PathVariable String id){
+//        Optional<Product> userOptional=repo.findById(id);
+//        return userOptional.map(product ->
+//        {
+//            repo.deleteById(product.getCode());
+//            return new ResponseEntity<>(product,HttpStatus.OK);
+//
+//        }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
+//    @DeleteMapping(value = "deleteInfo/{id}")
+//    public ResponseEntity<Product> deleteInfoId(@PathVariable String id){
+//        Optional<Product> userOptional=repo.findById(id);
+//        return userOptional.map(product ->
+//        {
+//            repo.deleteById(product.getCode());
+//            return new ResponseEntity<>(product,HttpStatus.OK);
+//
+//        }).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
 
 }
