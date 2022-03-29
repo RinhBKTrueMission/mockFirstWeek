@@ -78,91 +78,91 @@ public class HomeController {
                         account.getPassword(),
                         roles));
     }
-//    @PreAuthorize("hasRole('MODERATOR')")
-//    @GetMapping("/gettk")
-//    public ResponseEntity<Iterable<Account>> getAll(){
-//        return new ResponseEntity<>(accountRepository.findAll(), HttpStatus.OK);
-//    }
-//    @PostMapping("/signup")
-//    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-//        if (accountRepository.existsByUsername(signUpRequest.getUsername())) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(new MessageResponse("Error: Username is already taken!"));
-//        }
-//
-//        if (accountRepository.existsByEmail(signUpRequest.getEmail())) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(new MessageResponse("Error: Email is already in use!"));
-//        }
-//
-//        // Create new user's account
-//        Account account = new Account(signUpRequest.getUsername(),
-//                signUpRequest.getEmail(),
-//                encoder.encode(signUpRequest.getPassword()));
-//
-//        Set<String> strRoles = signUpRequest.getRole();
-//        Set<Role> roles = new HashSet<>();
-//        String emailTerm=signUpRequest.getEmail();
-//        String regexAdmin="vnpt-technology";
-//        //String regexMod="^[a-zA-Z0-9_+&*-] + (?:\\\\.[a-zA-Z0-9_+&*-] + )*@(vnshop)\\.+ [a-zA-Z]{2, 7}";
-//        String regexStaff="vnshop";
-//
-//
-//        if (strRoles == null) {
-//            if(emailTerm.contains(regexAdmin)){
-//                Role userRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-//                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                roles.add(userRole);
-//            }else if(emailTerm.contains(regexStaff)){
-//                Role userRole = roleRepository.findByName(ERole.ROLE_STAFF)
-//                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                roles.add(userRole);
-//            }else{
-//                Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMERS)
-//                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                roles.add(userRole);
-//            }
-//
-//        } else {
-//            strRoles.forEach(role -> {
-//                switch (role) {
-//                    case "admin":
-//                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(adminRole);
-//
-//                        break;
-//                    case "mod":
-//                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(modRole);
-//
-//                        break;
-//                    case "staff":
-//                        Role staffRole = roleRepository.findByName(ERole.ROLE_STAFF)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(staffRole);
-//
-//                        break;
-//                    default:
-//                        Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMERS)
-//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-//                        roles.add(userRole);
-//                }
-//            });
-//        }
-//
-//        account.setRoles(roles);
-//        accountRepository.save(account);
-//
-//        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-//    }
-//    public static boolean patternMatches(String emailAddress, String regexPattern) {
-//        return Pattern.compile(regexPattern)
-//                .matcher(emailAddress)
-//                .matches();
-//    }
+    @PreAuthorize("hasRole('MODERATOR')")
+    @GetMapping("/gettk")
+    public ResponseEntity<Iterable<Account>> getAll(){
+        return new ResponseEntity<>(accountRepository.findAll(), HttpStatus.OK);
+    }
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+        if (accountRepository.existsByUsername(signUpRequest.getUsername())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is already taken!"));
+        }
+
+        if (accountRepository.existsByEmail(signUpRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Email is already in use!"));
+        }
+
+        // Create new user's account
+        Account account = new Account(signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
+                encoder.encode(signUpRequest.getPassword()));
+
+        Set<String> strRoles = signUpRequest.getRole();
+        Set<Role> roles = new HashSet<>();
+        String emailTerm=signUpRequest.getEmail();
+        String regexAdmin="vnpt-technology";
+        //String regexMod="^[a-zA-Z0-9_+&*-] + (?:\\\\.[a-zA-Z0-9_+&*-] + )*@(vnshop)\\.+ [a-zA-Z]{2, 7}";
+        String regexStaff="vnshop";
+
+
+        if (strRoles == null) {
+            if(emailTerm.contains(regexAdmin)){
+                Role userRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                roles.add(userRole);
+            }else if(emailTerm.contains(regexStaff)){
+                Role userRole = roleRepository.findByName(ERole.ROLE_STAFF)
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                roles.add(userRole);
+            }else{
+                Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMERS)
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                roles.add(userRole);
+            }
+
+        } else {
+            strRoles.forEach(role -> {
+                switch (role) {
+                    case "admin":
+                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(adminRole);
+
+                        break;
+                    case "mod":
+                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(modRole);
+
+                        break;
+                    case "staff":
+                        Role staffRole = roleRepository.findByName(ERole.ROLE_STAFF)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(staffRole);
+
+                        break;
+                    default:
+                        Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMERS)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(userRole);
+                }
+            });
+        }
+
+        account.setRoles(roles);
+        accountRepository.save(account);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+    public static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
+    }
 }
 
