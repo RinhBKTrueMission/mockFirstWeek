@@ -159,10 +159,10 @@ public class HomeController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-//    public static boolean patternMatches(String emailAddress, String regexPattern) {
-//        return Pattern.compile(regexPattern)
-//                .matcher(emailAddress)
-//                .matches();
-//    }
+    public static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
+    }
 }
 
