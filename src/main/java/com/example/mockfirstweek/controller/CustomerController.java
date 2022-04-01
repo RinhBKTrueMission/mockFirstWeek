@@ -22,9 +22,9 @@ public class CustomerController {
     public ResponseEntity<Iterable<Product>> getAll(){
         return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
     }
-//    @GetMapping("/getinfo/{id}")
-//    public ResponseEntity<Product> getInfo(@PathVariable String id){
-//        Optional<Product> userOptional=repo.findById(id);
-//        return userOptional.map(product -> new ResponseEntity<>(product,HttpStatus.OK)).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
+    @GetMapping("/getinfo/{id}")
+    public ResponseEntity<Product> getInfo(@PathVariable String id){
+        Optional<Product> userOptional=repo.findById(id);
+        return userOptional.map(product -> new ResponseEntity<>(product,HttpStatus.OK)).orElseGet(()->new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }
