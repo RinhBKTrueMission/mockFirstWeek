@@ -1,70 +1,44 @@
 package com.example.mockfirstweek.model;
 
+import com.example.mockfirstweek.core.Template.TemplateEntity;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "Orders", //
-        uniqueConstraints = { @UniqueConstraint(columnNames = "Order_Num") })
-public class Order {
+@Table(name = "order")
+public class Order extends TemplateEntity {
 
-    //private static final long serialVersionUID = -2576670215015463100L;
-
-    @Id
-    @Column(name = "ID", length = 50)
-    private String id;
-
-    @Column(name = "Order_Date", nullable = false)
-    private Date orderDate;
-
-    @Column(name = "Order_Num", nullable = false)
-    private int orderNum;
-
-    @Column(name = "Amount", nullable = false)
-    private double amount;
-
-    @Column(name = "Customer_Name", length = 255, nullable = false)
+    private String code;
+    private Long orderDate;
+    private BigDecimal quantity = BigDecimal.ZERO;
     private String customerName;
-
-    @Column(name = "Customer_Address", length = 255, nullable = false)
     private String customerAddress;
-
-    @Column(name = "Customer_Email", length = 128, nullable = false)
     private String customerEmail;
-
-    @Column(name = "Customer_Phone", length = 128, nullable = false)
     private String customerPhone;
 
-    public String getId() {
-        return id;
+    public String getCode() {
+        return code;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public Date getOrderDate() {
+    public Long getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(Long orderDate) {
         this.orderDate = orderDate;
     }
 
-    public int getOrderNum() {
-        return orderNum;
+    public BigDecimal getQuantity() {
+        return quantity;
     }
 
-    public void setOrderNum(int orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
     }
 
     public String getCustomerName() {
@@ -98,5 +72,4 @@ public class Order {
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
     }
-
 }

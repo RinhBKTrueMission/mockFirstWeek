@@ -1,31 +1,18 @@
 package com.example.mockfirstweek.model;
 
+import com.example.mockfirstweek.core.Template.TemplateEntity;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.math.BigDecimal;
 
 @Entity
-@Table(name = "Products")
-public class Product   {
-
-    //private static final long serialVersionUID = -1000119078147252957L;
-
-    @Id
-    @Column(name = "Code", length = 20, nullable = false)
+@Table(name = "products")
+public class Product  extends TemplateEntity {
     private String code;
-
-    @Column(name = "Name", length = 255, nullable = false)
     private String name;
-
-    @Column(name = "Price", nullable = false)
-    private double price;
-
+    private BigDecimal price;
     @Lob
-    @Column(name = "Image", length = Integer.MAX_VALUE, nullable = true)
     private byte[] image;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "Create_Date", nullable = false)
-    private Date createDate;
 
     public Product() {
     }
@@ -46,20 +33,12 @@ public class Product   {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
     }
 
     public byte[] getImage() {

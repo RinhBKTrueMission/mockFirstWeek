@@ -1,20 +1,16 @@
-package com.example.mockfirstweek.controller;
+package com.example.mockfirstweek.endpoint;
 
 import com.example.mockfirstweek.JWT.JwtUtils;
 import com.example.mockfirstweek.JWT.request.LoginRequest;
 import com.example.mockfirstweek.JWT.request.SignupRequest;
 import com.example.mockfirstweek.JWT.response.JwtResponse;
 import com.example.mockfirstweek.JWT.response.MessageResponse;
-import com.example.mockfirstweek.model.Account;
 import com.example.mockfirstweek.model.ERole;
-import com.example.mockfirstweek.model.Product;
 import com.example.mockfirstweek.model.Role;
-import com.example.mockfirstweek.reponsitory.AccountRepository;
+import com.example.mockfirstweek.model.User;
+import com.example.mockfirstweek.reponsitory.UserRepository;
 import com.example.mockfirstweek.reponsitory.RoleRepository;
-import com.example.mockfirstweek.service.AccountDetailService;
 import com.example.mockfirstweek.service.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,12 +31,12 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/home")
-public class HomeController {
+public class HomeEndpoint {
     final
     AuthenticationManager authenticationManager;
 
     final
-    AccountRepository accountRepository;
+    UserRepository userRepository;
 
     final
     RoleRepository roleRepository;
@@ -51,9 +47,9 @@ public class HomeController {
     final
     JwtUtils jwtUtils;
 
-    public HomeController(AuthenticationManager authenticationManager, AccountRepository accountRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+    public HomeEndpoint(AuthenticationManager authenticationManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
-        this.accountRepository = accountRepository;
+        this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
@@ -79,26 +75,26 @@ public class HomeController {
                         roles));
     }
     @PreAuthorize("hasRole('MODERATOR')")
-    @GetMapping("/gettk")
-    public ResponseEntity<Iterable<Account>> getAll(){
-        return new ResponseEntity<>(accountRepository.findAll(), HttpStatus.OK);
+//    @GetMapping("/get_info")
+    public ResponseEntity<Iterable<User>> getAll(){
+        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (accountRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
 
-        if (accountRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
         // Create new user's account
-        Account account = new Account(signUpRequest.getUsername(),
+        User account = new User (signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
@@ -155,7 +151,7 @@ public class HomeController {
         }
 
         account.setRoles(roles);
-        accountRepository.save(account);
+        userRepository.save(account);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
